@@ -1,5 +1,0 @@
-project: deb-01-371820
-dataset: coffee
-
-# data files
-coffee: output.parquet
