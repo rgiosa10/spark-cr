@@ -8,10 +8,11 @@
 
 ## Technologies Used
 
+* Python
 * Spark
 * BigQuery
-* Matplot
-* Python
+* Jupyter
+* `Matplotlib`
 * Git
 * Markdown
 * `.gitignore`
@@ -44,105 +45,40 @@ This project follows the below steps:
    4. Max 'High' value.
 5. Then the dataframe (including the four added columns) is saved to a parquet file.
 6. `Matplotlib` is used to create two visualizations (i.e. a chart) using the coffee data.
-7. Finally, the Parquet file is loaded to BigQuery.
+7. Finally, the Parquet file is loaded to BigQuery. See snapshot below:
+
+<img src='imgs/bq_load.png' alt='bq load' width='640'>
+
 
 ## Setup/Installation Requirements
 
-* Go to https://github.com/rgiosa10/airflow_pt2_cr.git to find the specific repository for this website.
+* Go to https://github.com/rgiosa10/spark-cr.git to find the specific repository for this website.
 * Then open your terminal. I recommend going to your Desktop directory:
     ```bash
     cd Desktop
     ```
 * Then clone the repository by inputting: 
   ```bash
-  git clone https://github.com/rgiosa10/airflow_pt2_cr.git
+  git clone https://github.com/rgiosa10/spark-cr.git
   ```
 * Go to the new directory or open the directory folder on your desktop:
   ```bash
-  cd airflow_pt2_cr
+  cd spark-cr
   ```
 * open the directory in VS Code:
   ```bash
   code .
   ```
-* Once VS Code is open, then run the setup file:
+* Once VS Code is open, then create your virtual environment and pip install the requirements txt
   ```bash
-  ./setup.sh
-  ```
-
-    The contents of the `setup.sh` include the below to install 1) relevant version of python 2) create virtual env 3) installing Airflow in virtual env and 4) requirements.txt:
-    ```bash
-    #/bin/bash
-    # this script will setup the environment and install all necessary components 
-
-    # install/upgrade virtualenv
-    python3.7 -m pip install --upgrade virtualenv
-
     # create and run a python3.7 virtual env
     python3.7 -m venv venv
     source venv/bin/activate
-    # install/upgrade pip
-    python3.7 -m pip install --upgrade pip setuptools wheel
-
-    # install Airflow in the virtual env
-    AIRFLOW_VERSION=2.3.2
-    PYTHON_VERSION=3.7
-    CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
-    pip install "apache-airflow[async,postgres,google]==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
 
     # pip install pypi packages
     pip install -r requirements.txt
     ```
-
-* Then run the airflow setup file:
-
-  ```bash
-  ./airflow_setup.sh
-  ```
-    
-    The contents of the `airflow_setup.sh` include the below to 1) creating ./logs and ./plugins directories in the dsa-airflow directory 2) download the `docker_compose.yaml` 3) create the .env and 4) initialize airflow
-    
-```bash
-    #!/bin/bash
-    # Move into the dsa-airflow directory and make subdirs
-    cd dsa-airflow
-
-    # download the docker-compose.yaml and set the .env
-    curl -LfO 'https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml'
-    echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
-
-
-    # initialize airflow 
-    docker-compose up airflow-init
-```
-
-* Once airflow has been initialized, use the below command line tool that allows you to initialize the rest of the Docker containers:
-        ```bash
-        docker-compose up
-        ```
-
-* You will need to create a file connection for the `data/` folder. To do so go to the airflow GUI and click Admin -> Connections and then create a new connection with the below config and click save:
-
-    <img src="imgs/conn_setup.png" alt="connection setup" width="640"/>
-
-
-* Once this is all setup, in the Airflow GUI 1) enable your DAG and 2) trigger it to run. From there go to your VS Code and run the below command from inside the data directory:
-
-    ```bash
-    ./get_data.sh
-    ```
-This will download the CSV file to your local filesystem in the data folder, which will trigger the file sensor and start the DAG.
-
-* Once setups have been completed, you will want to be using the below commands to manage airflow and docker:
-    
-    1. In order to shut down hit `^Ctrl C` to stop Airflow on the local host and then run the below to stop the containers and remove old volumes:
-        ```bash
-        docker-compose down --volumes --remove-orphans 
-        ```
-    2. Use the below command line tool if you want to re-initialize the rest of the Docker containers:
-        ```bash
-        docker-compose up
-        ```
+* Update Google BiqQuery credentials to the correct project that you want to upload files to.
 </br>
 
 ## Known Bugs
