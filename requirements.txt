@@ -8,3 +8,5 @@ pyspark
 pyspark[sql]
 pyspark[pandas_on_spark]
 matplotlib
+google-cloud-storage
+google-cloud-bigquery
