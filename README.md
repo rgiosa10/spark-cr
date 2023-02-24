@@ -4,6 +4,8 @@
 
 #### This repo showcases the creation of an ETL pipeline where data is extracted from a CSV file, transformed using Spark, then loaded into BigQuery.
 
+<img src='imgs/spark_cr_readme.png' alt='visual summary' width='750'>
+
 <br>
 
 ## Technologies Used
